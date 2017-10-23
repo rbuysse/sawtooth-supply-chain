@@ -49,18 +49,17 @@ WORKDIR /usr/src/supply-chain
 
 # Install Dependencies
 COPY asset_client/package.json asset_client/
-RUN cd asset_client/ && npm install && cd ..
-
 COPY fish_client/package.json fish_client/
-RUN cd fish_client/ && npm install && cd ..
-
 COPY server/package.json server/
-RUN cd server/ && npm install && cd ..
+
+RUN cd asset_client/ && npm install && cd .. \
+ && cd fish_client/ && npm install && cd .. \
+ && cd server/ && npm install && cd ..
 
 # Build Clients
 COPY . .
 
-RUN cd asset_client/ && npm run build && cd ..
-RUN cd fish_client/ && npm run build && cd ..
+RUN cd asset_client/ && npm run build && cd .. \
+ && cd fish_client/ && npm run build && cd ..
 
 EXPOSE 3000/tcp
