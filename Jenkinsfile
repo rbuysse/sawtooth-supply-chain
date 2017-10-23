@@ -68,11 +68,11 @@ node ('master') {
         }
 
         stage("Run Lint") {
-            sh 'docker run --rm -v $(pwd):/project/sawtooth-core sawtooth-dev-python:$ISOLATION_ID run_lint'
+            sh 'docker run --rm -v $(pwd):/project/sawtooth-supply-chain sawtooth-dev-python:$ISOLATION_ID run_lint'
         }
 
         stage("Run Bandit") {
-            sh 'docker run --rm -v $(pwd):/project/sawtooth-core sawtooth-dev-python:$ISOLATION_ID run_bandit'
+            sh 'docker run --rm -v $(pwd):/project/sawtooth-supply-chain sawtooth-dev-python:$ISOLATION_ID run_bandit'
         }
 
         // Run the tests
@@ -81,7 +81,7 @@ node ('master') {
         }
 
         stage("Compile coverage report") {
-            sh 'docker run --rm -v $(pwd):/project/sawtooth-core sawtooth-dev-python:$ISOLATION_ID /bin/bash -c "cd coverage && coverage combine && coverage html -d html"'
+            sh 'docker run --rm -v $(pwd):/project/sawtooth-supply-chain sawtooth-dev-python:$ISOLATION_ID /bin/bash -c "cd coverage && coverage combine && coverage html -d html"'
         }
 
         stage("Create git archive") {
@@ -95,7 +95,7 @@ node ('master') {
 
         stage ("Build documentation") {
             sh 'docker build . -f ci/sawtooth-build-docs -t sawtooth-build-docs:$ISOLATION_ID'
-            sh 'docker run --rm -v $(pwd):/project/sawtooth-core sawtooth-build-docs:$ISOLATION_ID'
+            sh 'docker run --rm -v $(pwd):/project/sawtooth-supply-chain sawtooth-build-docs:$ISOLATION_ID'
         }
 
         stage("Archive Build artifacts") {
