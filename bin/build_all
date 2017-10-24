@@ -60,6 +60,8 @@ main() {
 
     docker_build server/Dockerfile . supply-chain-server
     docker_build ci/sawtooth-dev-python . sawtooth-dev-python
+
+    build_python
 }
 
 docker_run() {
@@ -108,6 +110,11 @@ docker_build() {
         --build-arg http_proxy=$http_proxy \
         --build-arg HTTPS_PROXY=$HTTPS_PROXY \
         --build-arg HTTP_PROXY=$HTTP_PROXY
+}
+
+build_python() {
+    ./docker/build/build_images
+    ./docker/build/build_debs
 }
 
 main
