@@ -1,0 +1,10 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    dockerfile: docker/drone
+    tags: 'pr-${DRONE_COMMIT_SHA:0:7}'
+    repo: rbuysse/drone
+    secrets: [ docker_username, docker_password ]
+
+when:
+  branch: [master]
